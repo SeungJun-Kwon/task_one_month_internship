@@ -29,9 +29,8 @@ import org.springframework.util.StringUtils;
 public class JwtUtil {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    private final long TOKEN_TIME = 60 * 60 * 1000L * 24; // 60분 * 24 => 하루
-    private final long ACCESS_TOKEN_TIME = 30 * 60 * 1000L; // 30분
-    private final long REFRESH_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
+    public final long ACCESS_TOKEN_TIME = 30 * 60 * 1000L; // 30분
+    public final long REFRESH_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
 
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
