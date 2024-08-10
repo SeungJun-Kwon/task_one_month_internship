@@ -70,6 +70,12 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
         );
 
+        /*
+        1. 토큰 검증 인가 필터
+        2. 로그인 및 토큰 생성 필터
+        3. 기존 UsernamePasswordAuthenticationFilter
+           (JwtAuthenticationFilter 가 해당 Filter 를 상속하고 있기에 거의 동작하지 않음)
+         */
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 

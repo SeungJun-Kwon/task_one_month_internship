@@ -1,7 +1,8 @@
 package com.sparta.task_one_month_internship.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.task_one_month_internship.domain.user.dto.UserSignInRequest;
+import com.sparta.task_one_month_internship.domain.user.dto.UserSignRequest;
+import com.sparta.task_one_month_internship.domain.user.dto.UserSignResponse;
 import com.sparta.task_one_month_internship.domain.user.entity.User;
 import com.sparta.task_one_month_internship.domain.user.entity.UserRole;
 import com.sparta.task_one_month_internship.global.jwt.JwtUtil;
@@ -10,10 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -27,20 +25,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/api/v1/login");
+        setFilterProcessesUrl("/api/v1/users/sign");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
         HttpServletResponse response) throws AuthenticationException {
         try {
-            UserSignInRequest requestDto = objectMapper.readValue(request.getInputStream(),
-                UserSignInRequest.class);
+            UserSignRequest signRequest = objectMapper.readValue(request.getInputStream(),
+                UserSignRequest.class);
 
             return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                    requestDto.getUsername(),
-                    requestDto.getPassword(),
+                    signRequest.getUsername(),
+                    signRequest.getPassword(),
                     null
                 )
             );
@@ -77,14 +75,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, token);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("token", token);
-        result.put("userId", user.getUserId());
-        result.put("username", user.getUsername());
-        result.put("nickname", user.getNickname());
+        UserSignResponse signInResponse = new UserSignResponse(token);
 
-        ResponseEntity<Map<String, Object>> responseEntity = ResponseEntity.ok(result);
-        response.getWriter().println(objectMapper.writeValueAsString(responseEntity.getBody()));
+        response.getWriter().println(objectMapper.writeValueAsString(signInResponse));
     }
 
     @Override
