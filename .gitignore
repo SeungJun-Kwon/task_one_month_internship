@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### properties ###
-*.properties
+application.properties
 
 ### SSH ###
 *.pem
