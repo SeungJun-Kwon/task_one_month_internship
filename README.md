@@ -23,3 +23,11 @@
 7. 만료 시 토큰의 ```Claims```에 있는 유저 정보를 바탕으로 ```RefreshToken``` 조회
 8. ```RefreshToken```의 유효 및 만료 검증
 9. 새로운 ```AccessToken``` 발행 및 ```HttpSurvletResponse```의 **Header**에 저장
+
+### 배포 환경
+
+AWS 프리티어 EC2 서버 리눅스 환경에 배포
+
+http://43.203.224.161:8080
+
+![image](https://github.com/user-attachments/assets/8c83adf0-9974-4323-96e7-c25b5e90e866)
