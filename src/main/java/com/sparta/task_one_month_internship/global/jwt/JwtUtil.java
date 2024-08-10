@@ -24,7 +24,6 @@ import org.springframework.util.StringUtils;
 public class JwtUtil {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String BEARER_PREFIX = "Bearer ";
     private final long TOKEN_TIME = 60 * 60 * 1000L * 24; // 60분 * 24 => 하루
 
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
@@ -41,8 +40,7 @@ public class JwtUtil {
     public String createToken(User user) {
         Date date = new Date();
 
-        return BEARER_PREFIX +
-            Jwts.builder()
+        return Jwts.builder()
                 .setSubject(user.getUsername()) // 사용자 식별자값(Username)
                 .claim("userId", user.getUserId())
                 .claim("nickname", user.getNickname())
@@ -54,9 +52,9 @@ public class JwtUtil {
     }
 
     public String getJwtFromHeader(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
+        String token = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(token)) {
+            return token.substring(7);
         }
         return null;
     }
