@@ -8,7 +8,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.mock;
 
 import com.sparta.task_one_month_internship.domain.user.entity.User;
-import com.sparta.task_one_month_internship.domain.user.entity.UserRefreshToken;
 import com.sparta.task_one_month_internship.domain.user.entity.UserRole;
 import com.sparta.task_one_month_internship.domain.user.repository.UserRefreshTokenRepository;
 import com.sparta.task_one_month_internship.global.jwt.JwtUtil;
@@ -105,7 +104,7 @@ class JwtUtilTest {
         Claims claims = jwtUtil.getUserInfoFromToken(token);
 
         assertEquals("testUser", claims.getSubject());
-        assertEquals(1L, claims.get("userId"));
+        assertEquals(1L, Long.valueOf(String.valueOf(claims.get("userId"))));
         assertEquals("TestNickname", claims.get("nickname"));
         assertEquals("USER", claims.get("authority"));
     }

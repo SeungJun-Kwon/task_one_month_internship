@@ -38,6 +38,7 @@ out/
 
 ### properties ###
 application.properties
+application-aws.properties
 
 ### SSH ###
 *.pem
