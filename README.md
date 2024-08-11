@@ -1,6 +1,7 @@
 ﻿# Task one month internship
 - 한 달 인턴 과제 제출용 레포지토리
 - 유저 인증, 인가 및 JUnit 테스트, AWS EC2 배포 프로젝트
+- 프로젝트 기간 : 2024.08.10
 
 ### ERD
 
